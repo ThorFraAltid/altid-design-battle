@@ -3,51 +3,63 @@
   "items": [
     {
       "name": "Tomat & Gulerod",
-      "file": "Altid Mad - Tomat & Gulerod.jpg"
+      "file": "Altid Mad - Tomat & Gulerod.jpg",
+      "thumb": "Altid Mad - Tomat & Gulerod__thumb.jpg"
     },
     {
       "name": "Aubergine",
-      "file": "Altid Mad — Aubergine.jpg"
+      "file": "Altid Mad — Aubergine.jpg",
+      "thumb": "Altid Mad — Aubergine__thumb.jpg"
     },
     {
       "name": "Blomme & Koral",
-      "file": "Altid Mad — Blomme & Koral.jpg"
+      "file": "Altid Mad — Blomme & Koral.jpg",
+      "thumb": "Altid Mad — Blomme & Koral__thumb.jpg"
     },
     {
       "name": "Bordeaux",
-      "file": "Altid Mad — Bordeaux.jpg"
+      "file": "Altid Mad — Bordeaux.jpg",
+      "thumb": "Altid Mad — Bordeaux__thumb.jpg"
     },
     {
       "name": "Chokolade",
-      "file": "Altid Mad — Chokolade.jpg"
+      "file": "Altid Mad — Chokolade.jpg",
+      "thumb": "Altid Mad — Chokolade__thumb.jpg"
     },
     {
       "name": "Hindbær",
-      "file": "Altid Mad — Hindbær.jpg"
+      "file": "Altid Mad — Hindbær.jpg",
+      "thumb": "Altid Mad — Hindbær__thumb.jpg"
     },
     {
       "name": "Karry",
-      "file": "Altid Mad — Karry.jpg"
+      "file": "Altid Mad — Karry.jpg",
+      "thumb": "Altid Mad — Karry__thumb.jpg"
     },
     {
       "name": "Lavendel",
-      "file": "Altid Mad — Lavendel.jpg"
+      "file": "Altid Mad — Lavendel.jpg",
+      "thumb": "Altid Mad — Lavendel__thumb.jpg"
     },
     {
       "name": "Magenta",
-      "file": "Altid Mad — Magenta.jpg"
+      "file": "Altid Mad — Magenta.jpg",
+      "thumb": "Altid Mad — Magenta__thumb.jpg"
     },
     {
       "name": "Støvet Rosa",
-      "file": "Altid Mad — Støvet Rosa.jpg"
+      "file": "Altid Mad — Støvet Rosa.jpg",
+      "thumb": "Altid Mad — Støvet Rosa__thumb.jpg"
     },
     {
       "name": "Turkis",
-      "file": "Altid Mad — Turkis.jpg"
+      "file": "Altid Mad — Turkis.jpg",
+      "thumb": "Altid Mad — Turkis__thumb.jpg"
     },
     {
       "name": "Original (grøn)",
-      "file": "Orginial - Altid Mad.jpg"
+      "file": "Orginial - Altid Mad.jpg",
+      "thumb": "Orginial - Altid Mad__thumb.jpg"
     }
   ]
 }
