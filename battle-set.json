@@ -1,0 +1,53 @@
+{
+  "base": "battle-pdfs/",
+  "items": [
+    {
+      "name": "Tomat & Gulerod",
+      "file": "Altid Mad - Tomat & Gulerod.pdf"
+    },
+    {
+      "name": "Aubergine",
+      "file": "Altid Mad — Aubergine.pdf"
+    },
+    {
+      "name": "Blomme & Koral",
+      "file": "Altid Mad — Blomme & Koral.pdf"
+    },
+    {
+      "name": "Bordeaux",
+      "file": "Altid Mad — Bordeaux.pdf"
+    },
+    {
+      "name": "Chokolade",
+      "file": "Altid Mad — Chokolade.pdf"
+    },
+    {
+      "name": "Hindbær",
+      "file": "Altid Mad — Hindbær.pdf"
+    },
+    {
+      "name": "Karry",
+      "file": "Altid Mad — Karry.pdf"
+    },
+    {
+      "name": "Lavendel",
+      "file": "Altid Mad — Lavendel.pdf"
+    },
+    {
+      "name": "Magenta",
+      "file": "Altid Mad — Magenta.pdf"
+    },
+    {
+      "name": "Støvet Rosa",
+      "file": "Altid Mad — Støvet Rosa.pdf"
+    },
+    {
+      "name": "Turkis",
+      "file": "Altid Mad — Turkis.pdf"
+    },
+    {
+      "name": "Original (grøn)",
+      "file": "Orginial - Altid Mad.pdf"
+    }
+  ]
+}
