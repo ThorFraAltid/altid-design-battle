@@ -64,8 +64,8 @@
   .scard{border:1px solid var(--line);background:#fff;overflow:hidden;position:relative;text-align:left}
   .scard.champ{border:2px solid var(--lime)}
   .srank{position:absolute;top:8px;left:8px;background:#163223;color:#fff;font-size:12px;padding:3px 10px;border-radius:99px;z-index:2}
-  .sthumb{height:140px;overflow:hidden;background:var(--paper)}
-  .sthumb img{width:100%;display:block}
+  .sthumb{height:260px;overflow:auto;background:var(--paper)}
+  .sthumb img{width:100%;height:auto;display:block}
   .sname{padding:11px 13px 1px;font-size:15px;color:var(--forest)}
   .sround{padding:0 13px 12px;font-size:13px;color:var(--muted)}
   .winactions{display:flex;gap:12px;margin-top:30px;justify-content:center}
@@ -189,6 +189,7 @@
       const list=[];
       for(let i=0;i<man.items.length;i++){
         const it=man.items[i];
+        status.textContent="Henter designs · "+(i+1)+" / "+man.items.length;
         const resp=await fetch(baseU+encodeURIComponent(it.file));
         if(!resp.ok) throw new Error(it.file+" ("+resp.status+")");
         const pages=await renderPdf(await resp.arrayBuffer());
@@ -263,12 +264,24 @@
     });
   }
 
+  function fallbackCopy(t){
+    const ta=document.createElement("textarea"); ta.value=t; ta.setAttribute("readonly","");
+    ta.style.position="fixed"; ta.style.top="-1000px"; document.body.appendChild(ta);
+    ta.focus(); ta.select(); ta.setSelectionRange(0,t.length);
+    let ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta); return ok;
+  }
+  function copyText(t){
+    if(navigator.clipboard && window.isSecureContext){
+      return navigator.clipboard.writeText(t).then(()=>true).catch(()=>fallbackCopy(t));
+    }
+    return Promise.resolve(fallbackCopy(t));
+  }
   function copyWinner(){
-    const name=($("#winName").textContent||"").trim();
-    const msg="🏆 Vinderen af Altid Hjem Design Battle: "+name;
-    if(navigator.clipboard) navigator.clipboard.writeText(msg).catch(()=>{});
-    if(navigator.share) navigator.share({text:msg}).catch(()=>{});
-    $("#shareMsg").textContent="Kopieret — indsæt i Slack med ⌘V.";
+    const msg="🏆 "+(($("#winName").textContent||"").trim());
+    copyText(msg).then(ok=>{
+      $("#shareMsg").textContent = ok ? ("Kopieret: “"+msg+"” — indsæt i Slack med ⌘V.") : ("Kopiér manuelt: "+msg);
+    });
   }
 
   /* events */
