@@ -10,7 +10,7 @@
 <style>
   :root{
     --cream:#FCFAF4; --paper:#F5EFE3; --forest:#193D23; --forest2:#163223;
-    --lime:#90FF7C; --muted:#7B7569; --line:#E6E2D8; --win:#3E8E54; --slack:#4A154B;
+    --lime:#90FF7C; --muted:#7B7569; --line:#E6E2D8; --win:#3E8E54;
   }
   *{box-sizing:border-box;font-weight:400}
   html,body{margin:0;height:100%}
@@ -27,17 +27,11 @@
   .ghost{background:transparent;border:1px solid var(--line);color:var(--forest);padding:9px 15px;border-radius:10px;font-size:13px}
   .ghost:hover{background:var(--paper)}
 
-  /* upload */
+  /* loading screen */
   #upload{min-height:calc(100vh - 56px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
-  #upload h1{font-size:58px;line-height:1.05;margin:0 0 22px;letter-spacing:-2px;color:var(--forest)}
-  .lead{max-width:600px;margin:0 0 30px;line-height:1.6;font-size:20px;color:var(--muted)}
-  .lead b{color:var(--forest)}
-  .drop{width:min(620px,92vw);border:2px dashed #C9C2B2;border-radius:20px;background:#fff;padding:42px 24px;transition:.2s}
-  .drop.drag{border-color:var(--win);background:#F4FBF2}
-  .drop .big{font-size:18px;margin-bottom:6px}
-  .drop .sub{color:var(--muted);font-size:14px;margin-bottom:20px}
-  .cta{background:var(--forest);color:#fff;padding:14px 24px;border-radius:13px;font-size:15px}
-  .cta:hover{background:var(--forest2)}
+  #upload h1{font-size:58px;line-height:1.05;margin:0;letter-spacing:-2px;color:var(--forest)}
+  .spinner{width:46px;height:46px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--forest);animation:spin .9s linear infinite;margin-top:34px}
+  @keyframes spin{to{transform:rotate(360deg)}}
   #status{margin-top:18px;color:var(--muted);font-size:14px;min-height:20px}
 
   /* arena */
@@ -54,21 +48,27 @@
   .vs{display:flex;align-items:center;justify-content:center}
   .vs span{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--forest);color:var(--lime);font-size:15px}
 
-  /* winner */
-  #winner{display:none;min-height:calc(100vh - 56px);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+  /* winner + scoreboard */
+  #winner{display:none;min-height:calc(100vh - 56px);flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:48px 40px 60px}
   #winner .trophy{font-size:52px}
-  #winner h1{font-size:38px;margin:6px 0 14px;letter-spacing:-1px}
-  .namerow{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:18px}
-  .namerow label{font-size:13px;color:var(--muted)}
-  #winName{font-family:inherit;font-size:20px;color:var(--forest);text-align:center;border:1px solid var(--line);border-radius:12px;padding:11px 16px;width:min(420px,86vw);background:#fff}
-  #winName:focus{outline:none;border-color:var(--win)}
-  .winshot{width:min(540px,92vw);max-height:58vh;overflow:auto;border:3px solid var(--win);background:#fff}
+  #winner h1{font-size:36px;margin:6px 0 14px;letter-spacing:-1px}
+  .namerow{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:18px}
+  .winname{font-size:26px;color:var(--forest);letter-spacing:-.5px}
+  .copy{background:var(--lime);color:#163223;padding:13px 22px;border-radius:13px;font-size:15px}
+  .copy:hover{filter:brightness(.93)}
+  .winshot{width:min(520px,92vw);max-height:52vh;overflow:auto;border:3px solid var(--lime);background:#fff}
   .winshot img{width:100%;display:block}
-  .winactions{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;justify-content:center}
-  .slack{background:var(--slack);color:#fff;padding:14px 24px;border-radius:13px;font-size:15px}
-  .slack:hover{background:#611f64}
-  .sharemsg{margin-top:16px;color:var(--muted);font-size:14px;min-height:20px;max-width:560px}
-  .sharemsg a{color:var(--win)}
+  .sharemsg{margin-top:14px;color:var(--muted);font-size:14px;min-height:20px}
+  .scoretitle{font-size:24px;margin:44px 0 18px;color:var(--forest)}
+  .scoreboard{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;width:min(1120px,94vw)}
+  .scard{border:1px solid var(--line);background:#fff;overflow:hidden;position:relative;text-align:left}
+  .scard.champ{border:2px solid var(--lime)}
+  .srank{position:absolute;top:8px;left:8px;background:#163223;color:#fff;font-size:12px;padding:3px 10px;border-radius:99px;z-index:2}
+  .sthumb{height:140px;overflow:hidden;background:var(--paper)}
+  .sthumb img{width:100%;display:block}
+  .sname{padding:11px 13px 1px;font-size:15px;color:var(--forest)}
+  .sround{padding:0 13px 12px;font-size:13px;color:var(--muted)}
+  .winactions{display:flex;gap:12px;margin-top:30px;justify-content:center}
 
   @media (max-width:820px){
     .arena-wrap{grid-template-columns:1fr;gap:14px}
@@ -103,13 +103,7 @@
 
 <section id="upload">
   <h1>Hvilket design vinder?</h1>
-  <p class="lead"><b>Upload jeres designs som PDF</b> — så dyster de 1‑mod‑1. Du vælger vinderen hver gang, og taberen ryger ud, til der står ét design tilbage.</p>
-  <div class="drop" id="drop">
-    <div class="big">Træk din PDF herind</div>
-    <div class="sub">eller vælg en fil — du kan også vælge flere billeder (PNG/JPG)</div>
-    <button class="cta" id="browse">Vælg fil(er)</button>
-    <input id="file" type="file" accept="application/pdf,image/*" multiple hidden />
-  </div>
+  <div class="spinner" aria-label="Indlæser"></div>
   <div id="status"></div>
 </section>
 
@@ -133,17 +127,18 @@
   <div class="trophy">🏆</div>
   <h1>Vi har en vinder</h1>
   <div class="namerow">
-    <label for="winName">Vinderens navn (kan rettes)</label>
-    <input id="winName" type="text" placeholder="Navn på vinderdesignet" />
+    <div class="winname" id="winName">—</div>
+    <button class="copy" id="copy">Kopiér og del i Slack</button>
   </div>
   <div class="winshot"><img id="winImg" alt="Vinder"/></div>
-  <div class="winactions">
-    <button class="slack" id="share">Del i Slack</button>
-    <button class="ghost" id="slackcfg">⚙ Slack‑opsætning</button>
-    <button class="ghost" id="again">Kør igen</button>
-    <button class="ghost" id="newpdf">Upload ny PDF</button>
-  </div>
   <div id="shareMsg" class="sharemsg"></div>
+
+  <h2 class="scoretitle">Samlet rangering</h2>
+  <div class="scoreboard" id="scoreboard"></div>
+
+  <div class="winactions">
+    <button class="ghost" id="again">Kør igen</button>
+  </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -153,7 +148,7 @@
   if(window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; }
 
   let contestants=[];
-  let current=[], next=[], idx=0, totalMatches=0, played=0;
+  let current=[], next=[], idx=0, totalMatches=0, played=0, placements=[];
 
   const upload=$("#upload"), arena=$("#arena"), winner=$("#winner"), hud=$("#hud"), status=$("#status");
 
@@ -186,53 +181,23 @@
     if(/^orgi?inial|^original/i.test(n)) n="Original (grøn)";
     return n||fn;
   }
-  function loadImages(files){
-    files=files.slice().sort((a,b)=>(a.name||"").localeCompare(b.name||"",'da'));
-    return Promise.all(files.map((f,i)=>new Promise(res=>{
-      const r=new FileReader();
-      r.onload=()=>res({name:cleanName(f.name)||("Billede "+(i+1)), src:r.result}); r.readAsDataURL(f);
-    })));
-  }
 
-  async function handleFiles(files){
-    files=[...files];
-    const pdfs=files.filter(f=>f.type==="application/pdf"||/\.pdf$/i.test(f.name)).sort((a,b)=>(a.name||"").localeCompare(b.name||"",'da'));
-    const imgs=files.filter(f=>/^image\//.test(f.type));
+  async function loadSet(url){
     try{
-      let list=[];
-      if(pdfs.length){
-        for(let k=0;k<pdfs.length;k++){
-          status.textContent="Læser PDF "+(k+1)+" af "+pdfs.length+" …";
-          const pages=await renderPdf(await pdfs[k].arrayBuffer());
-          const nm=cleanName(pdfs[k].name);
-          if(pages.length===1){ pages[0].name=nm; list.push(pages[0]); }
-          else pages.forEach((pg,i)=>{ pg.name=nm+" · s."+(i+1); list.push(pg); });
-        }
-      } else if(imgs.length){ list=await loadImages(imgs); }
-      contestants=list;
-    }catch(e){ status.textContent="Kunne ikke læse filerne: "+e.message; return; }
-    if(contestants.length<2){ status.textContent="Jeg fandt kun "+contestants.length+" design. Du skal bruge mindst 2."; return; }
-    start();
-  }
-
-  async function loadSet(url, silent){
-    try{
-      status.textContent=silent?"":"Henter sæt …";
       const man=await (await fetch(url)).json();
       const baseU=man.base||"";
       const list=[];
       for(let i=0;i<man.items.length;i++){
         const it=man.items[i];
-        status.textContent="Henter design "+(i+1)+" af "+man.items.length+" … ("+it.name+")";
         const resp=await fetch(baseU+encodeURIComponent(it.file));
-        if(!resp.ok) throw new Error("kunne ikke hente "+it.file+" ("+resp.status+")");
+        if(!resp.ok) throw new Error(it.file+" ("+resp.status+")");
         const pages=await renderPdf(await resp.arrayBuffer());
         pages[0].name=it.name||cleanName(it.file);
         list.push(pages[0]);
       }
       if(list.length<2){ status.textContent="Sættet skal have mindst 2 designs."; return; }
       contestants=list; start();
-    }catch(e){ status.textContent = silent ? "" : "Kunne ikke hente sættet: "+e.message; }
+    }catch(e){ status.textContent="Kunne ikke hente designs: "+e.message; }
   }
 
   function roundLabel(n){
@@ -241,7 +206,7 @@
   }
 
   function start(){
-    current=shuffle(contestants.slice()); next=[]; idx=0; played=0;
+    current=shuffle(contestants.slice()); next=[]; idx=0; played=0; placements=[];
     totalMatches=contestants.length-1;
     upload.style.display="none"; winner.style.display="none"; arena.style.display="block"; hud.style.visibility="visible";
     $("#shareMsg").textContent="";
@@ -268,60 +233,49 @@
   }
 
   function pick(side){
-    next.push(side===0?current[idx]:current[idx+1]);
+    const winnerC=side===0?current[idx]:current[idx+1];
+    const loserC =side===0?current[idx+1]:current[idx];
+    placements.push({name:loserC.name, src:loserC.src, tier:current.length, round:roundLabel(current.length)});
+    next.push(winnerC);
     played++; idx+=2;
     advance();
   }
 
   function showWinner(w){
+    placements.push({name:w.name, src:w.src, tier:0, round:"🏆 Vinder"});
     arena.style.display="none"; hud.style.visibility="hidden"; winner.style.display="flex";
-    $("#winName").value=w.name;
+    $("#winName").textContent=w.name;
     $("#winImg").src=w.src;
+    $("#shareMsg").textContent="";
+    renderScoreboard();
   }
 
-  /* ---- Slack sharing ---- */
-  function getHook(){ return (localStorage.getItem("slackWebhook")||"").trim(); }
-  function setHook(){
-    const v=prompt("Indsæt jeres Slack Incoming Webhook URL.\nGemmes kun lokalt i denne browser.\n(Lad feltet stå tomt for at slå auto‑post fra.)", getHook());
-    if(v===null) return;
-    localStorage.setItem("slackWebhook", v.trim());
-    $("#shareMsg").textContent = v.trim() ? "Slack‑webhook gemt — “Del i Slack” sender nu direkte." : "Auto‑post slået fra.";
-  }
-  function msgFor(){
-    const name=($("#winName").value||"").trim()||"(uden navn)";
-    return "🏆 Vinderen af Altid Hjem Design Battle: *"+name+"*";
-  }
-  function share(){
-    const hook=getHook();
-    const msg=msgFor();
-    if(hook){
-      fetch(hook,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},
-        body:"payload="+encodeURIComponent(JSON.stringify({text:msg}))})
-        .then(()=>{ $("#shareMsg").textContent="Sendt til Slack  —  "+msg.replace(/\*/g,""); })
-        .catch(()=>{ copyFallback(msg); });
-    } else { copyFallback(msg); }
-  }
-  function copyFallback(msg){
-    const plain=msg.replace(/\*/g,"");
-    if(navigator.clipboard) navigator.clipboard.writeText(plain).catch(()=>{});
-    $("#shareMsg").innerHTML="Kopieret til udklipsholder — indsæt i Slack med ⌘V.<br><a href='#' id='sethook'>Vil du auto‑poste i stedet? Opsæt Slack‑webhook →</a>";
-    const sh=$("#sethook"); if(sh) sh.onclick=e=>{e.preventDefault();setHook();};
-    if(navigator.share) navigator.share({text:plain}).catch(()=>{});
+  function renderScoreboard(){
+    const sorted=placements.slice().sort((a,b)=>a.tier-b.tier);
+    const sb=$("#scoreboard"); sb.innerHTML="";
+    sorted.forEach((p,i)=>{
+      const card=document.createElement("div"); card.className="scard"+(i===0?" champ":"");
+      const rank=document.createElement("div"); rank.className="srank"; rank.textContent="#"+(i+1);
+      const th=document.createElement("div"); th.className="sthumb"; const im=document.createElement("img"); im.src=p.src; th.appendChild(im);
+      const nm=document.createElement("div"); nm.className="sname"; nm.textContent=p.name;
+      const rd=document.createElement("div"); rd.className="sround"; rd.textContent=p.round;
+      card.append(rank,th,nm,rd); sb.appendChild(card);
+    });
   }
 
-  /* ---- events ---- */
-  $("#browse").onclick=()=>$("#file").click();
-  $("#file").onchange=e=>handleFiles(e.target.files);
-  const drop=$("#drop");
-  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("drag");}));
-  ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("drag");}));
-  drop.addEventListener("drop",e=>{ if(e.dataTransfer.files.length) handleFiles(e.dataTransfer.files); });
+  function copyWinner(){
+    const name=($("#winName").textContent||"").trim();
+    const msg="🏆 Vinderen af Altid Hjem Design Battle: "+name;
+    if(navigator.clipboard) navigator.clipboard.writeText(msg).catch(()=>{});
+    if(navigator.share) navigator.share({text:msg}).catch(()=>{});
+    $("#shareMsg").textContent="Kopieret — indsæt i Slack med ⌘V.";
+  }
+
+  /* events */
   document.querySelectorAll(".pick").forEach(b=>b.onclick=()=>pick(+b.dataset.side));
   $("#restart").onclick=start;
   $("#again").onclick=start;
-  $("#newpdf").onclick=()=>{ winner.style.display="none"; upload.style.display="flex"; status.textContent=""; };
-  $("#share").onclick=share;
-  $("#slackcfg").onclick=setHook;
+  $("#copy").onclick=copyWinner;
 
   (function(){
     const wraps=document.querySelectorAll(".imgwrap"); if(wraps.length<2) return;
@@ -333,8 +287,7 @@
     }));
   })();
 
-  const setParam=new URLSearchParams(location.search).get("set");
-  loadSet(setParam || "battle-set.json", !setParam);
+  loadSet(new URLSearchParams(location.search).get("set") || "battle-set.json");
 
   window.__battleInject=function(n){ contestants=[]; for(let i=1;i<=n;i++){const c=document.createElement("canvas");c.width=300;c.height=200;const x=c.getContext("2d");x.fillStyle="hsl("+(i*47%360)+",60%,70%)";x.fillRect(0,0,300,200);x.fillStyle="#222";x.font="40px sans-serif";x.fillText("#"+i,120,115);contestants.push({name:"Design "+i,src:c.toDataURL()});} start(); };
 })();
