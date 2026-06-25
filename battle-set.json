@@ -1,53 +1,53 @@
 {
-  "base": "battle-pdfs/",
+  "base": "battle-imgs/",
   "items": [
     {
       "name": "Tomat & Gulerod",
-      "file": "Altid Mad - Tomat & Gulerod.pdf"
+      "file": "Altid Mad - Tomat & Gulerod.jpg"
     },
     {
       "name": "Aubergine",
-      "file": "Altid Mad — Aubergine.pdf"
+      "file": "Altid Mad — Aubergine.jpg"
     },
     {
       "name": "Blomme & Koral",
-      "file": "Altid Mad — Blomme & Koral.pdf"
+      "file": "Altid Mad — Blomme & Koral.jpg"
     },
     {
       "name": "Bordeaux",
-      "file": "Altid Mad — Bordeaux.pdf"
+      "file": "Altid Mad — Bordeaux.jpg"
     },
     {
       "name": "Chokolade",
-      "file": "Altid Mad — Chokolade.pdf"
+      "file": "Altid Mad — Chokolade.jpg"
     },
     {
       "name": "Hindbær",
-      "file": "Altid Mad — Hindbær.pdf"
+      "file": "Altid Mad — Hindbær.jpg"
     },
     {
       "name": "Karry",
-      "file": "Altid Mad — Karry.pdf"
+      "file": "Altid Mad — Karry.jpg"
     },
     {
       "name": "Lavendel",
-      "file": "Altid Mad — Lavendel.pdf"
+      "file": "Altid Mad — Lavendel.jpg"
     },
     {
       "name": "Magenta",
-      "file": "Altid Mad — Magenta.pdf"
+      "file": "Altid Mad — Magenta.jpg"
     },
     {
       "name": "Støvet Rosa",
-      "file": "Altid Mad — Støvet Rosa.pdf"
+      "file": "Altid Mad — Støvet Rosa.jpg"
     },
     {
       "name": "Turkis",
-      "file": "Altid Mad — Turkis.pdf"
+      "file": "Altid Mad — Turkis.jpg"
     },
     {
       "name": "Original (grøn)",
-      "file": "Orginial - Altid Mad.pdf"
+      "file": "Orginial - Altid Mad.jpg"
     }
   ]
 }

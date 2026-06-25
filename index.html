@@ -166,11 +166,9 @@
   </div>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 (function(){
   const $ = s => document.querySelector(s);
-  if(window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; }
 
   let contestants=[];
   let current=[], next=[], idx=0, totalMatches=0, played=0, placements=[];
@@ -179,27 +177,7 @@
 
   function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-  async function renderPdf(buf){
-    const pdf=await pdfjsLib.getDocument({data:buf}).promise;
-    const out=[];
-    for(let p=1;p<=pdf.numPages;p++){
-      const page=await pdf.getPage(p);
-      const base=page.getViewport({scale:1});
-      const scale=Math.min(2.5, 1900/base.width);
-      const vp=page.getViewport({scale});
-      const c=document.createElement("canvas"); c.width=vp.width; c.height=vp.height;
-      const ctx=c.getContext("2d");
-      await page.render({canvasContext:ctx,viewport:vp}).promise;
-      const W=c.width, H=c.height, d=ctx.getImageData(0,0,W,H).data;
-      const blank=y=>{ for(let xx=0;xx<W;xx+=9){const i=(y*W+xx)*4; if(d[i]<250||d[i+1]<250||d[i+2]<250) return false;} return true; };
-      let last=H-1; while(last>H*0.25 && blank(last)) last--;
-      const cropH=Math.min(H, last+24);
-      let outC=c;
-      if(cropH < H-4){ outC=document.createElement("canvas"); outC.width=W; outC.height=cropH; outC.getContext("2d").drawImage(c,0,0); }
-      out.push({name:"Side "+p, src:outC.toDataURL("image/jpeg",0.94)});
-    }
-    return out;
-  }
+  // designs are pre-rendered to images offline (battle-imgs/); loaded directly below
   function cleanName(fn){
     let n=(fn||"").replace(/\.[a-z0-9]+$/i,"");
     n=n.replace(/^\s*altid\s*mad\s*[-–—]\s*/i,"").trim();
@@ -211,18 +189,15 @@
     try{
       const man=await (await fetch(url)).json();
       const baseU=man.base||"";
-      const list=[];
-      for(let i=0;i<man.items.length;i++){
-        const it=man.items[i];
-        status.textContent="Henter designs · "+(i+1)+" / "+man.items.length;
-        const resp=await fetch(baseU+encodeURIComponent(it.file));
-        if(!resp.ok) throw new Error(it.file+" ("+resp.status+")");
-        const pages=await renderPdf(await resp.arrayBuffer());
-        pages[0].name=it.name||cleanName(it.file);
-        list.push(pages[0]);
-      }
-      if(list.length<2){ status.textContent="Sættet skal have mindst 2 designs."; return; }
-      contestants=list; start();
+      contestants=man.items.map(it=>({name: it.name||cleanName(it.file), src: baseU+encodeURIComponent(it.file)}));
+      if(contestants.length<2){ status.textContent="Sættet skal have mindst 2 designs."; return; }
+      let loaded=0;
+      await Promise.all(contestants.map(c=>new Promise(res=>{
+        const im=new Image();
+        im.onload=im.onerror=()=>{ loaded++; status.textContent="Henter designs · "+loaded+" / "+contestants.length; res(); };
+        im.src=c.src;
+      })));
+      start();
     }catch(e){ status.textContent="Kunne ikke hente designs: "+e.message; }
   }
 
